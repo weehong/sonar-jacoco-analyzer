@@ -1,0 +1,81 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sonar-jacoco-analyzer"
+version = "1.0.0"
+description = "Analyze SonarCloud/SonarQube code quality issues and JaCoCo coverage reports"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Quality Assurance",
+]
+keywords = ["sonarcloud", "sonarqube", "code-quality", "jacoco", "coverage", "commit", "conventional-commits", "ai"]
+dependencies = [
+    "rich>=13.0.0",
+    "GitPython>=3.1.40",
+    "PyGithub>=2.1.1",
+    "python-gitlab>=4.0.0",
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+7z = [
+    "py7zr>=0.20.0",
+]
+
+[project.scripts]
+sonar-jacoco = "sonar_jacoco_analyzer.cli:main"
+git-commit-ai = "sonar_jacoco_analyzer.commit_cli:main"
+generate-docs = "sonar_jacoco_analyzer.docs_generator:main"
+
+[project.urls]
+Homepage = "https://github.com/username/sonar-jacoco-analyzer"
+Repository = "https://github.com/username/sonar-jacoco-analyzer"
+Issues = "https://github.com/username/sonar-jacoco-analyzer/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ["py38", "py39", "py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
